@@ -228,6 +228,15 @@ main {
     box-shadow: 0 20px 45px rgba(11, 46, 109, 0.1);
 }
 
+.app-footer {
+    color: var(--muted);
+    border-color: rgba(230, 234, 242, 0.7) !important;
+}
+
+.app-footer .text-muted {
+    color: rgba(108, 122, 147, 0.87) !important;
+}
+
 .page-title {
     color: var(--navy);
     font-weight: 700;
