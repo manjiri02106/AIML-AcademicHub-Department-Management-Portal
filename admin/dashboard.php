@@ -162,6 +162,12 @@ $pageTitle = 'Admin Dashboard';
                         </div>
                     </div>
                 </div>
+                <div class="app-footer mt-5 pt-4 border-top">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                        <div class="text-muted small">© 2026 Zeal College of Engineering. All rights reserved.</div>
+                        <div class="small text-muted">Narhe, Pune | zcoer@zealeducation.com</div>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
