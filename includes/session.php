@@ -28,7 +28,12 @@ if (!empty($_SESSION['user'])) {
     if (time() - $_SESSION['last_activity'] > $timeoutSeconds) {
         session_unset();
         session_destroy();
-        header('Location: /auth/login.php');
+        
+        if (defined('BASE_URL')) {
+            header('Location: ' . rtrim(BASE_URL, '/') . '/auth/login.php');
+        } else {
+            header('Location: /auth/login.php');
+        }
         exit;
     }
 

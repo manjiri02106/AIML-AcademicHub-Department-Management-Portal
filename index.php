@@ -5,6 +5,6 @@ if (isLoggedIn()) {
     header('Location: ' . roleToDashboardPath($_SESSION['user']['role']));
 } else {
     clearAuthSession();
-    header('Location: /auth/login.php');
+    header('Location: ' . rtrim(BASE_URL, '/') . '/auth/login.php');
 }
 exit;

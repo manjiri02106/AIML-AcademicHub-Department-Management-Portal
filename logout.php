@@ -9,5 +9,5 @@ clearAuthSession();
 session_unset();
 session_destroy();
 
-header('Location: /auth/login.php');
+header('Location: ' . url('/auth/login.php'));
 exit;
