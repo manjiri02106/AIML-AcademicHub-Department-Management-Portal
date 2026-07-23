@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/session.php';
+require_once __DIR__ . '/config.php';
 
 function csrfToken(): string
 {
@@ -37,7 +38,7 @@ function requireLogin(): void
 {
     if (!isLoggedIn()) {
         clearAuthSession();
-        header('Location: /auth/login.php');
+        header('Location: ' . rtrim(BASE_URL, '/') . '/auth/login.php');
         exit;
     }
 }
@@ -49,7 +50,7 @@ function requireRole(array $allowedRoles): void
     $role = $_SESSION['user']['role'] ?? '';
     if (!in_array($role, $allowedRoles, true)) {
         clearAuthSession();
-        header('Location: /403.php');
+        header('Location: ' . rtrim(BASE_URL, '/') . '/403.php');
         exit;
     }
 }
@@ -57,7 +58,7 @@ function requireRole(array $allowedRoles): void
 function roleToDashboardPath(string $role): string
 {
     $routes = [
-        'Administrator' => '/admin/dashboard.php',
+        'Administrator' => '/admin/dashboard/',
         'HOD' => '/hod/dashboard.php',
         'Faculty' => '/faculty/dashboard.php',
         'Student' => '/student/dashboard.php',
@@ -66,7 +67,8 @@ function roleToDashboardPath(string $role): string
         'IQAC/NBA Coordinator' => '/iqac/dashboard.php',
     ];
 
-    return $routes[$role] ?? '/auth/login.php';
+    $path = $routes[$role] ?? '/auth/login.php';
+    return rtrim(BASE_URL, '/') . $path;
 }
 
 function passwordStrength(string $password): array

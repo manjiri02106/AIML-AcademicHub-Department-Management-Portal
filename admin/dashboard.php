@@ -13,7 +13,7 @@ $pageTitle = 'Admin Dashboard';
     <title><?= escape($pageTitle) ?> | AIML AcademicHub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?= url('/assets/css/style.css') ?>">
 </head>
 <body>
     <div class="container-fluid">
@@ -21,7 +21,7 @@ $pageTitle = 'Admin Dashboard';
             <aside class="col-lg-2 sidebar p-4">
                 <div class="d-flex align-items-center gap-3 mb-4">
                     <div class="brand-logo-sidebar">
-                        <img src="/assets/images/image.png" alt="AIML AcademicHub Logo" class="img-fluid">
+                        <img src="<?= url('/assets/images/image.png') ?>" alt="AIML AcademicHub Logo" class="img-fluid">
                     </div>
                     <div>
                         <div class="fw-bold">AIML Hub</div>
@@ -37,7 +37,7 @@ $pageTitle = 'Admin Dashboard';
                     <a class="nav-link" href="#"><i class="bi bi-briefcase me-2"></i>Placements</a>
                     <a class="nav-link" href="#"><i class="bi bi-bar-chart me-2"></i>Reports</a>
                     <a class="nav-link" href="#"><i class="bi bi-gear me-2"></i>Settings</a>
-                    <a class="nav-link" href="/auth/logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+                    <a class="nav-link" href="<?= url('/auth/logout.php') ?>"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
                 </nav>
             </aside>
             <main class="col-lg-10 p-4 p-lg-5 bg-light">

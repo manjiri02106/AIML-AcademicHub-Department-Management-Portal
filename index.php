@@ -1,12 +1,10 @@
 <?php
-require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/auth.php';
 
-ensureSession();
-
-if (!empty($_SESSION['admin_id'])) {
-    header('Location: ' . BASE_URL . '/admin/dashboard/');
-    exit;
+if (isLoggedIn()) {
+    header('Location: ' . roleToDashboardPath($_SESSION['user']['role']));
+} else {
+    clearAuthSession();
+    header('Location: ' . rtrim(BASE_URL, '/') . '/auth/login.php');
 }
-
-header('Location: ' . BASE_URL . '/login.php');
 exit;

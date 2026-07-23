@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/auth.php';
 
 function ensureSession(): void
 {
@@ -10,37 +11,65 @@ function ensureSession(): void
     }
 }
 
-function requireLogin(): void
+function getDb(): PDO
 {
-    // Authentication bypassed for local development/testing.
-    // WARNING: this disables all login checks. Revert this change for production.
-    return;
+    return getDbConnection();
 }
 
-function requirePermission(string $permission): void
-{
-    requireLogin();
+/**
+ * Backward-compatible wrappers for the old admin module.
+ * These delegate to the new auth.php functions.
+ */
 
-    if (!hasPermission($permission)) {
-        http_response_code(403);
-        echo '<div class="alert alert-danger m-4">Access denied.</div>';
-        exit;
+if (!function_exists('requirePermission')) {
+    function requirePermission(string $permission): void
+    {
+        requireLogin();
+
+        if (!hasPermission($permission)) {
+            http_response_code(403);
+            echo '<div class="alert alert-danger m-4">Access denied.</div>';
+            exit;
+        }
     }
 }
 
-function hasPermission(string $permission): bool
-{
-    ensureSession();
-    $permissions = $_SESSION['permissions'] ?? [];
+if (!function_exists('hasPermission')) {
+    function hasPermission(string $permission): bool
+    {
+        ensureSession();
+        $permissions = $_SESSION['permissions'] ?? [];
 
-    return in_array($permission, $permissions, true) || in_array('dashboard', $permissions, true);
+        return in_array($permission, $permissions, true) || in_array('dashboard', $permissions, true);
+    }
 }
 
-function getCurrentUser(): array
+if (!function_exists('getCurrentUser')) {
+    function getCurrentUser(): array
+    {
+        ensureSession();
+
+        return $_SESSION['user'] ?? [];
+    }
+}
+
+
+function setFlash(string $type, string $message): void
 {
     ensureSession();
+    $_SESSION['flash'] = ['type' => $type, 'message' => $message];
+}
 
-    return $_SESSION['user'] ?? [];
+function renderFlash(): void
+{
+    ensureSession();
+    if (!empty($_SESSION['flash'])) {
+        $flash = $_SESSION['flash'];
+        $type = htmlspecialchars((string)$flash['type'], ENT_QUOTES, 'UTF-8');
+        $message = htmlspecialchars((string)$flash['message'], ENT_QUOTES, 'UTF-8');
+        echo '<div class="alert alert-' . $type . ' alert-dismissible fade show" role="alert">' . $message . '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+        unset($_SESSION['flash']);
+    }
 }
 
 function logActivity(string $message, ?int $userId = null): void
@@ -48,9 +77,9 @@ function logActivity(string $message, ?int $userId = null): void
     try {
         $pdo = getDbConnection();
         $stmt = $pdo->prepare('INSERT INTO activity_logs (user_id, message, created_at) VALUES (?, ?, NOW())');
-        $stmt->execute([$userId ?? (getCurrentUser()['id'] ?? null), $message]);
+        $stmt->execute([$userId ?? null, $message]);
     } catch (Throwable $e) {
-        // Intentionally ignored to keep the UI responsive.
+        // ignore
     }
 }
 
@@ -77,5 +106,5 @@ function setSettingValue(string $key, string $value): void
 
 function url(string $path): string
 {
-    return BASE_URL . $path;
+    return rtrim(BASE_URL, '/') . '/' . ltrim($path, '/');
 }

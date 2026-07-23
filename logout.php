@@ -1,11 +1,13 @@
 <?php
+require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/functions.php';
 
-ensureSession();
-logActivity('Signed out', getCurrentUser()['id'] ?? null);
+$user = currentUser();
+logActivity('Signed out', $user['id'] ?? null);
 
+clearAuthSession();
 session_unset();
 session_destroy();
 
-header('Location: ' . BASE_URL . '/login.php');
+header('Location: ' . url('/auth/login.php'));
 exit;

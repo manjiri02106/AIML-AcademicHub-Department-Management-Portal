@@ -25,14 +25,19 @@ CREATE TABLE IF NOT EXISTS role_permissions (
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   full_name VARCHAR(150) NOT NULL,
+  name VARCHAR(150) DEFAULT NULL,
   email VARCHAR(150) NOT NULL UNIQUE,
   mobile VARCHAR(20) DEFAULT NULL,
   password_hash VARCHAR(255) NOT NULL,
+  password VARCHAR(255) DEFAULT NULL,
   department VARCHAR(100) DEFAULT NULL,
   designation VARCHAR(100) DEFAULT NULL,
   role_id INT DEFAULT NULL,
+  role VARCHAR(50) DEFAULT NULL,
   status VARCHAR(20) NOT NULL DEFAULT 'active',
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
   joining_date DATE DEFAULT NULL,
+  last_login DATETIME DEFAULT NULL,
   profile_photo VARCHAR(255) DEFAULT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE SET NULL
@@ -125,8 +130,8 @@ SELECT r.id, p.id FROM roles r JOIN permissions p ON p.slug='settings' WHERE r.n
 INSERT IGNORE INTO role_permissions (role_id, permission_id)
 SELECT r.id, p.id FROM roles r JOIN permissions p ON p.slug='backup' WHERE r.name='Administrator';
 
-INSERT IGNORE INTO users (id, full_name, email, mobile, password_hash, department, designation, role_id, status, joining_date)
-VALUES (1, 'System Administrator', 'admin@aiml.edu', '9876543210', '$2y$10$KCHh6GdE4r5KzXNvZrSxae8S6bjZi77Xnfd2yjhVCtw7DxLN5Wava', 'AI & ML', 'Administrator', 1, 'active', '2024-01-01');
+INSERT IGNORE INTO users (id, full_name, name, email, mobile, password_hash, password, department, designation, role_id, role, status, is_active, joining_date)
+VALUES (1, 'System Administrator', 'System Administrator', 'admin@aiml.edu', '9876543210', '$2y$10$KCHh6GdE4r5KzXNvZrSxae8S6bjZi77Xnfd2yjhVCtw7DxLN5Wava', '$2y$10$KCHh6GdE4r5KzXNvZrSxae8S6bjZi77Xnfd2yjhVCtw7DxLN5Wava', 'AI & ML', 'Administrator', 1, 'Administrator', 'active', 1, '2024-01-01');
 
 INSERT IGNORE INTO department_settings (id, department_name, department_code, institute_name, address, email, phone, academic_year, semester, divisions, sections, subjects, course_types, theme_color, footer_text, smtp_email, sms_enabled, push_enabled)
 VALUES (1, 'Artificial Intelligence & Machine Learning', 'AIML', 'AIML AcademicHub Institute', 'New Delhi, India', 'dept@aiml.edu', '011-45001234', '2025-2026', 'Semester 1', 'A, B', 'A, B', 'Python, Data Structures, ML Basics', 'UG, PG', '#2563eb', '© 2026 AIML AcademicHub', 'smtp@aiml.edu', 1, 1);

@@ -23,22 +23,47 @@ if ($requestMethod === 'POST') {
         if ($email === '' || $password === '') {
             $message = 'Please enter both email and password.';
         } else {
-            $stmt = getDb()->prepare('SELECT id, name, email, password, role, is_active FROM users WHERE email = ? LIMIT 1');
+            $stmt = getDb()->prepare('SELECT u.id, u.full_name, u.name, u.email, u.password_hash, u.password, u.role, u.role_id, u.is_active, u.status, u.last_login, r.name AS role_name FROM users u LEFT JOIN roles r ON r.id = u.role_id WHERE u.email = ? LIMIT 1');
             $stmt->execute([$email]);
             $user = $stmt->fetch();
 
-            if ($user && password_verify($password, $user['password']) && (int) $user['is_active'] === 1) {
-                $_SESSION['user'] = [
-                    'id' => (int) $user['id'],
-                    'name' => $user['name'],
-                    'email' => $user['email'],
-                    'role' => $user['role'],
-                ];
-                $_SESSION['last_activity'] = time();
-                $stmt = getDb()->prepare('UPDATE users SET last_login = NOW() WHERE id = ?');
-                $stmt->execute([$user['id']]);
-                header('Location: ' . roleToDashboardPath($user['role']));
-                exit;
+            if ($user) {
+                $pwHash = $user['password_hash'] ?? $user['password'] ?? '';
+                $isActive = ($user['status'] === 'active') || ((int)($user['is_active'] ?? 0) === 1);
+
+                if (password_verify($password, $pwHash) && $isActive) {
+                    $roleName = $user['role'] ?? $user['role_name'] ?? 'Administrator';
+                    $displayName = $user['name'] ?? $user['full_name'] ?? 'User';
+
+                    // Load permissions for old admin module
+                    if ($user['role_id']) {
+                        $permStmt = getDb()->prepare('SELECT p.slug FROM role_permissions rp JOIN permissions p ON p.id = rp.permission_id WHERE rp.role_id = ?');
+                        $permStmt->execute([$user['role_id']]);
+                        $permissions = array_column($permStmt->fetchAll(), 'slug');
+                    } else {
+                        $permissions = [];
+                    }
+
+                    // Old session format
+                    $_SESSION['admin_id'] = $user['id'];
+                    $_SESSION['permissions'] = $permissions;
+
+                    // New session format
+                    $_SESSION['user'] = [
+                        'id' => (int) $user['id'],
+                        'name' => $displayName,
+                        'full_name' => $user['full_name'],
+                        'email' => $user['email'],
+                        'role' => $roleName,
+                        'role_name' => $user['role_name'],
+                    ];
+                    $_SESSION['last_activity'] = time();
+
+                    $stmt = getDb()->prepare('UPDATE users SET last_login = NOW() WHERE id = ?');
+                    $stmt->execute([$user['id']]);
+                    header('Location: ' . roleToDashboardPath($roleName));
+                    exit;
+                }
             }
 
             $message = 'Invalid email or password.';
@@ -54,7 +79,7 @@ if ($requestMethod === 'POST') {
     <title>Login | AIML AcademicHub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?= url('/assets/css/style.css') ?>">
 </head>
 <body class="auth-page">
     <div class="container-fluid vh-100">
@@ -63,7 +88,7 @@ if ($requestMethod === 'POST') {
                 <div class="hero-content text-white p-5">
                     <div class="d-flex align-items-center gap-3 mb-4">
                         <div class="hero-icon">
-                            <img src="/assets/images/image.png" alt="AIML AcademicHub Logo">
+                            <img src="<?= url('/assets/images/image.png') ?>" alt="AIML AcademicHub Logo">
                         </div>
                         <div>
                             <h3 class="fw-semibold mb-0">AIML AcademicHub</h3>
@@ -79,7 +104,7 @@ if ($requestMethod === 'POST') {
                     <div class="card-body p-4 p-lg-5">
                         <div class="text-center mb-4">
                             <div class="brand-logo mx-auto mb-3">
-                                <img src="/assets/images/image.png" alt="AIML AcademicHub Logo" class="img-fluid">
+                                <img src="<?= url('/assets/images/image.png') ?>" alt="AIML AcademicHub Logo" class="img-fluid">
                             </div>
                             <h2 class="fw-bold mt-3 mb-1">Welcome Back</h2>
                             <p class="text-muted">Sign in to continue to your workspace.</p>
