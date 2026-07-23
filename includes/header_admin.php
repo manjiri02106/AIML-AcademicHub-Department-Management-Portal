@@ -19,7 +19,7 @@ $user = getCurrentUser();
     <aside class="sidebar bg-dark text-white p-4">
         <div class="sidebar-brand mb-5 d-flex align-items-center gap-3">
             <div class="sidebar-logo rounded-3 d-flex align-items-center justify-content-center overflow-hidden bg-white">
-                <img src="<?= url('/assets/image/image.png') ?>" alt="AIML Hub Logo" class="img-fluid" />
+                <img src="<?= url('/assets/images/image.png') ?>" alt="AIML Hub Logo" class="img-fluid" />
             </div>
             <div>
                 <h5 class="mb-0">AIML Hub</h5>
