@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Login | AIML AcademicHub</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?= url('/assets/css/style.css') ?>">
 </head>
 <body class="auth-page">
     <div class="container-fluid vh-100">
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="hero-content text-white p-5">
                     <div class="d-flex align-items-center gap-3 mb-4">
                         <div class="hero-icon">
-                            <img src="/assets/images/image.png" alt="AIML AcademicHub Logo">
+                            <img src="<?= url('/assets/image/image.png') ?>" alt="AIML AcademicHub Logo">
                         </div>
                         <div>
                             <h3 class="fw-semibold mb-0">AIML AcademicHub</h3>
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="card-body p-4 p-lg-5">
                         <div class="text-center mb-4">
                             <div class="brand-logo mx-auto mb-3">
-                                <img src="/assets/images/image.png" alt="AIML AcademicHub Logo" class="img-fluid">
+                                <img src="<?= url('/assets/image/image.png') ?>" alt="AIML AcademicHub Logo" class="img-fluid">
                             </div>
                             <h2 class="fw-bold mt-3 mb-1">Welcome Back</h2>
                             <p class="text-muted">Sign in to continue to your workspace.</p>
