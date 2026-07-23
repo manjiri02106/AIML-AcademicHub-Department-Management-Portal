@@ -1,0 +1,200 @@
+/* 
+  AIML Academic Hub - Department Management Portal
+  Custom CSS & Responsive Design Enhancements
+*/
+
+:root {
+    --bg-main: #f8fafc;
+    --navy-dark: #0f172a;
+    --navy-card: #1e293b;
+    --indigo-primary: #6366f1;
+    --indigo-hover: #4f46e5;
+    --emerald-success: #10b981;
+    --rose-danger: #f43f5e;
+    --amber-warning: #f59e0b;
+    --slate-muted: #64748b;
+    --border-subtle: #e2e8f0;
+    --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-main);
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+/* Sidebar Styling */
+#sidebar-wrapper {
+    min-width: 260px;
+    max-width: 260px;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    color: #f8fafc;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+#sidebar-wrapper .sidebar-brand {
+    padding: 1.5rem 1.25rem;
+    font-weight: 700;
+    font-size: 1.15rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+}
+
+#sidebar-wrapper .nav-link {
+    color: #94a3b8;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    margin: 0.2rem 0.75rem;
+    transition: all 0.2s ease-in-out;
+}
+
+#sidebar-wrapper .nav-link i {
+    font-size: 1.2rem;
+    margin-right: 0.85rem;
+    width: 24px;
+    text-align: center;
+}
+
+#sidebar-wrapper .nav-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateX(3px);
+}
+
+#sidebar-wrapper .nav-link.active {
+    color: #ffffff;
+    background: var(--indigo-primary);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+}
+
+/* Top Navbar */
+.top-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-subtle);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.user-profile-badge {
+    background-color: #f1f5f9;
+    border: 1px solid var(--border-subtle);
+    border-radius: 50px;
+    padding: 0.35rem 0.85rem;
+}
+
+/* Cards & Widgets */
+.stat-card {
+    border: none;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1);
+}
+
+.stat-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+/* Modern Glass Data Tables */
+.custom-card {
+    border: none;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: var(--card-shadow);
+}
+
+.table-responsive {
+    border-radius: 10px;
+}
+
+.table custom-table {
+    margin-bottom: 0;
+}
+
+.table custom-table th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem;
+    border-bottom: 2px solid var(--border-subtle);
+}
+
+.table custom-table td {
+    padding: 1rem;
+    vertical-align: middle;
+    color: #334155;
+    font-size: 0.92rem;
+}
+
+/* Badges */
+.badge-ongoing {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.badge-completed {
+    background-color: #d1fae5;
+    color: #047857;
+}
+
+.badge-proposed {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+/* Buttons */
+.btn-indigo {
+    background-color: var(--indigo-primary);
+    color: #ffffff;
+    border: none;
+}
+
+.btn-indigo:hover {
+    background-color: var(--indigo-hover);
+    color: #ffffff;
+}
+
+/* Login Card */
+.login-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.15);
+}
+
+.login-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-radius: 16px 16px 0 0;
+    padding: 2.5rem 2rem;
+}
+
+/* Mobile responsive sidebar */
+@media (max-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: -260px;
+    }
+    #sidebar-wrapper.toggled {
+        margin-left: 0;
+    }
+}

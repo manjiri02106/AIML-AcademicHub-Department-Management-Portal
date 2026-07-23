@@ -1,0 +1,1 @@
+-- Legacy database export placeholder. Import database/schema.sql for the complete schema.
