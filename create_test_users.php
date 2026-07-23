@@ -11,14 +11,28 @@ $testUsers = [
 ];
 
 try {
-    $stmt = $pdo->prepare('INSERT INTO users (name, email, password, role, is_active) VALUES (?, ?, ?, ?, 1)');
+    $stmt = $pdo->prepare('INSERT INTO users (name, full_name, email, password, password_hash, role, role_id, is_active, status) VALUES (?, ?, ?, ?, ?, ?, ?, 1, "active")');
     
+    $roleMap = [
+        'HOD' => 2,
+        'Faculty' => 3,
+        'Student' => 4,
+        'TPO' => 5,
+        'Lab Coordinator' => 6,
+        'IQAC/NBA Coordinator' => 7,
+    ];
+
     foreach ($testUsers as $user) {
+        $hash = password_hash($user['password'], PASSWORD_DEFAULT);
+        $roleId = $roleMap[$user['role']] ?? null;
         $stmt->execute([
             $user['name'],
+            $user['name'], // full_name
             $user['email'],
-            password_hash($user['password'], PASSWORD_DEFAULT),
-            $user['role']
+            $hash, // password (new column)
+            $hash, // password_hash (old column)
+            $user['role'],
+            $roleId
         ]);
     }
     
