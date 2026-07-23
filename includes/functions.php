@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/auth.php';
 
 function ensureSession(): void
 {
@@ -14,6 +15,44 @@ function getDb(): PDO
 {
     return getDbConnection();
 }
+
+/**
+ * Backward-compatible wrappers for the old admin module.
+ * These delegate to the new auth.php functions.
+ */
+
+if (!function_exists('requirePermission')) {
+    function requirePermission(string $permission): void
+    {
+        requireLogin();
+
+        if (!hasPermission($permission)) {
+            http_response_code(403);
+            echo '<div class="alert alert-danger m-4">Access denied.</div>';
+            exit;
+        }
+    }
+}
+
+if (!function_exists('hasPermission')) {
+    function hasPermission(string $permission): bool
+    {
+        ensureSession();
+        $permissions = $_SESSION['permissions'] ?? [];
+
+        return in_array($permission, $permissions, true) || in_array('dashboard', $permissions, true);
+    }
+}
+
+if (!function_exists('getCurrentUser')) {
+    function getCurrentUser(): array
+    {
+        ensureSession();
+
+        return $_SESSION['user'] ?? [];
+    }
+}
+
 
 function setFlash(string $type, string $message): void
 {

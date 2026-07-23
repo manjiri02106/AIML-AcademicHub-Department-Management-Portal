@@ -15,7 +15,7 @@ $activities = $pdo->query('SELECT * FROM activity_logs ORDER BY id DESC LIMIT 5'
     <div class="d-flex justify-content-between align-items-start gap-4 flex-column flex-md-row">
         <div>
             <p class="text-muted mb-1">Welcome back</p>
-            <h1 class="display-6 fw-bold mb-2">Hello, <?= htmlspecialchars($user['full_name'] ?? 'System Administrator', ENT_QUOTES, 'UTF-8') ?></h1>
+            <h1 class="display-6 fw-bold mb-2">Hello, <?= htmlspecialchars($user['full_name'] ?? $user['name'] ?? 'System Administrator', ENT_QUOTES, 'UTF-8') ?></h1>
             <p class="text-muted">Monitor academic performance, attendance, placements, and institutional reports from one polished workspace.</p>
         </div>
         <div class="search-card p-3 rounded-4 bg-light">
