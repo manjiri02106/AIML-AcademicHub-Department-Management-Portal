@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
@@ -15,3 +15,10 @@ try {
 	http_response_code(500);
 	exit('Database connection failed.');
 }
+
+// Integrate with main AcademicHub authentication and helper functions
+require_once __DIR__ . '/../../includes/functions.php';
+
+// Force login check to ensure only authorized roles can access placement modules
+requireRole(['TPO', 'HOD', 'Administrator', 'Faculty', 'Student']);
+

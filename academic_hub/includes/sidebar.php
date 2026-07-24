@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // Professional sidebar for Academic ERP Placement module
 $currentPage = basename($_SERVER['PHP_SELF']);
 $menuItems = [
@@ -38,7 +38,7 @@ $menuItems = [
         <div class="sidebar-divider"></div>
 
         <div class="sidebar-footer">
-            <a href="#" class="sidebar-logout">
+            <a href="<?= url('/auth/logout.php') ?>" class="sidebar-logout">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Logout</span>
             </a>

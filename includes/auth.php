@@ -62,7 +62,7 @@ function roleToDashboardPath(string $role): string
         'HOD' => '/hod/dashboard.php',
         'Faculty' => '/faculty/dashboard.php',
         'Student' => '/student/dashboard.php',
-        'TPO' => '/tpo/dashboard.php',
+        'TPO' => '/academic_hub/dashboard.php',
         'Lab Coordinator' => '/lab/dashboard.php',
         'IQAC/NBA Coordinator' => '/iqac/dashboard.php',
     ];

@@ -15,10 +15,28 @@ $pageTitle = 'HOD Dashboard';
 </head>
 <body>
     <div class="container py-5">
-        <div class="dashboard-card p-4 p-lg-5">
+        <div class="dashboard-card p-4 p-lg-5 text-center">
             <h2 class="page-title">HOD Dashboard</h2>
-            <p class="text-muted">Welcome, <?= escape($_SESSION['user']['name']) ?>.</p>
-            <a href="<?= url('/auth/logout.php') ?>" class="btn btn-primary">Logout</a>
+            <p class="text-muted mb-4">Welcome, <?= escape($_SESSION['user']['name']) ?>.</p>
+            
+            <div class="row g-4 max-width-600 mx-auto mb-4">
+                <div class="col-md-6">
+                    <div class="card p-3 border shadow-sm h-100">
+                        <h5><i class="bi bi-kanban text-primary fs-3 d-block mb-2"></i> Projects & Internships</h5>
+                        <p class="small text-muted">Monitor all student projects, allocate mentor guides, and generate reports.</p>
+                        <a href="<?= url('/project-internships/') ?>" class="btn btn-primary btn-sm mt-auto">Open Projects Portal</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-3 border shadow-sm h-100">
+                        <h5><i class="bi bi-briefcase text-success fs-3 d-block mb-2"></i> Placements (TPO)</h5>
+                        <p class="small text-muted">View student eligibility status, upcoming drives, placement analytics.</p>
+                        <a href="<?= url('/academic_hub/dashboard.php') ?>" class="btn btn-success btn-sm mt-auto">Open Placement Portal</a>
+                    </div>
+                </div>
+            </div>
+
+            <a href="<?= url('/auth/logout.php') ?>" class="btn btn-outline-danger">Logout</a>
         </div>
     </div>
 </body>

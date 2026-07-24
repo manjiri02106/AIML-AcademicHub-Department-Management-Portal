@@ -31,7 +31,8 @@ $user = getCurrentUser();
             <li class="nav-item"><a class="nav-link text-white" href="<?= url('/admin/users/list.php') ?>"><i class="bi bi-mortarboard-fill"></i>Students</a></li>
             <li class="nav-item"><a class="nav-link text-white" href="<?= url('/admin/roles/list.php') ?>"><i class="bi bi-person-badge"></i>Faculty</a></li>
             <li class="nav-item"><a class="nav-link text-white" href="<?= url('/admin/settings/') ?>"><i class="bi bi-calendar-check-fill"></i>Attendance</a></li>
-            <li class="nav-item"><a class="nav-link text-white" href="<?= url('/admin/backup/') ?>"><i class="bi bi-kanban-fill"></i>Projects</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="<?= url('/project-internships/') ?>"><i class="bi bi-kanban-fill"></i>Projects & Internships</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="<?= url('/academic_hub/dashboard.php') ?>"><i class="bi bi-briefcase-fill"></i>Placements (TPO)</a></li>
             <li class="nav-item"><a class="nav-link text-white" href="<?= url('/admin/reports/') ?>"><i class="bi bi-bar-chart-line-fill"></i>Reports</a></li>
         </ul>
         <div class="mt-auto pt-4 sidebar-footer">

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // Top navigation bar for Academic ERP Placement module
 $currentPage = basename($_SERVER['PHP_SELF']);
 $breadcrumbs = [
@@ -45,20 +45,21 @@ $pageTitle = $trail[1];
           </a>
         </li>
         <li class="nav-item dropdown">
+          <?php $navUser = getCurrentUser(); ?>
           <a class="nav-link dropdown-toggle d-flex align-items-center text-dark" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="avatar me-2">
               <i class="bi bi-person-fill"></i>
             </div>
             <div class="d-none d-sm-block text-start">
-              <div class="small text-muted">Admin</div>
-              <div class="fw-semibold">John Doe</div>
+              <div class="small text-muted"><?= htmlspecialchars($navUser['role'] ?? 'TPO', ENT_QUOTES, 'UTF-8') ?></div>
+              <div class="fw-semibold"><?= htmlspecialchars($navUser['full_name'] ?? $navUser['name'] ?? 'User', ENT_QUOTES, 'UTF-8') ?></div>
             </div>
           </a>
           <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="userMenu">
             <li><a class="dropdown-item" href="#">Profile</a></li>
             <li><a class="dropdown-item" href="#">Settings</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
+            <li><a class="dropdown-item" href="<?= url('/auth/logout.php') ?>">Logout</a></li>
           </ul>
         </li>
       </ul>
