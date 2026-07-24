@@ -1,0 +1,817 @@
+/* ====================================================================
+   AIML AcademicHub - Department Management Portal
+   Dashboard & Module Specific Stylesheet
+   ==================================================================== */
+
+/* ====================================================================
+   HERO SLIDER SECTION
+   ==================================================================== */
+.hero-slider-container {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-lg);
+    background-color: var(--primary-navy);
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+}
+
+.hero-slide.active {
+    opacity: 1;
+}
+
+.hero-overlay {
+    width: 100%;
+    padding: 3rem 2.5rem 2rem;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(47, 65, 86, 0.92) 75%, rgba(15, 23, 42, 0.98) 100%);
+    color: #FFFFFF;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: var(--secondary-teal);
+    color: #FFFFFF;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.hero-welcome-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    color: #FFFFFF;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.hero-quote-box {
+    border-left: 3px solid var(--light-sky-blue);
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+.hero-quote {
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--light-sky-blue);
+    font-weight: 400;
+}
+
+.slider-dots {
+    position: absolute;
+    bottom: 1.25rem;
+    right: 2rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.dot.active {
+    background-color: var(--light-sky-blue);
+    width: 28px;
+    border-radius: var(--radius-full);
+}
+
+/* ====================================================================
+   STATISTICS CARDS SECTION
+   ==================================================================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--secondary-teal);
+}
+
+.stat-card.stat-navy::before { background-color: var(--primary-navy); }
+.stat-card.stat-teal::before { background-color: var(--secondary-teal); }
+.stat-card.stat-warning::before { background-color: var(--status-warning); }
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+}
+
+.stat-navy .stat-icon-wrapper {
+    background-color: rgba(47, 65, 86, 0.12);
+    color: var(--primary-navy);
+}
+
+.stat-teal .stat-icon-wrapper {
+    background-color: rgba(86, 124, 141, 0.15);
+    color: var(--secondary-teal);
+}
+
+.stat-warning .stat-icon-wrapper {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: var(--status-warning);
+}
+
+[data-theme="dark"] .stat-navy .stat-icon-wrapper {
+    background-color: rgba(200, 217, 230, 0.15);
+    color: var(--light-sky-blue);
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+}
+
+/* ====================================================================
+   QUICK ACCESS CARDS SECTION
+   ==================================================================== */
+.section-title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.section-title i {
+    color: var(--secondary-teal);
+}
+
+.quick-access-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+}
+
+.quick-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    transition: var(--transition);
+    position: relative;
+}
+
+.quick-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--secondary-teal);
+    box-shadow: var(--shadow-md);
+}
+
+.quick-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background-color: rgba(86, 124, 141, 0.1);
+    color: var(--secondary-teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    transition: var(--transition);
+}
+
+.quick-card:hover .quick-card-icon {
+    background-color: var(--primary-navy);
+    color: #FFFFFF;
+}
+
+.quick-card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.quick-card-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.quick-card-arrow {
+    align-self: flex-end;
+    font-size: 0.85rem;
+    color: var(--secondary-teal);
+    transition: var(--transition);
+}
+
+.quick-card:hover .quick-card-arrow {
+    transform: translateX(4px);
+}
+
+/* ====================================================================
+   ABOUT LABORATORY SECTION
+   ==================================================================== */
+.about-lab-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+.about-text h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-navy);
+    margin-bottom: 0.85rem;
+}
+
+[data-theme="dark"] .about-text h3 {
+    color: var(--light-sky-blue);
+}
+
+.about-text p {
+    font-size: 0.925rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.features-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.features-list li {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.features-list li i {
+    color: var(--status-success);
+}
+
+.about-highlights {
+    background-color: rgba(86, 124, 141, 0.06);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    border: 1px dashed var(--secondary-teal);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.highlight-icon {
+    width: 36px;
+    height: 36px;
+    background-color: var(--primary-navy);
+    color: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.highlight-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.highlight-sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* ====================================================================
+   LAB ASSETS MODULE CARDS
+   ==================================================================== */
+.labs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.75rem;
+    margin-bottom: 2.5rem;
+}
+
+.lab-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+
+.lab-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+
+.lab-card-header {
+    background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-teal) 100%);
+    color: #FFFFFF;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.lab-name-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.lab-location-tag {
+    font-size: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+}
+
+.lab-card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+}
+
+.lab-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.meta-item i {
+    color: var(--secondary-teal);
+}
+
+.meta-item strong {
+    color: var(--text-primary);
+}
+
+.lab-section-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+}
+
+.software-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.software-pill {
+    font-size: 0.75rem;
+    background-color: rgba(86, 124, 141, 0.1);
+    color: var(--secondary-teal);
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+}
+
+[data-theme="dark"] .software-pill {
+    background-color: rgba(200, 217, 230, 0.12);
+    color: var(--light-sky-blue);
+}
+
+.facilities-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.facility-badge {
+    font-size: 0.72rem;
+    background-color: var(--bg-beige);
+    color: var(--primary-navy);
+    border: 1px solid var(--border-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+[data-theme="dark"] .facility-badge {
+    background-color: #0F172A;
+    color: var(--light-sky-blue);
+    border-color: #334155;
+}
+
+.lab-card-footer {
+    padding: 1rem 1.5rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.action-btns-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* ====================================================================
+   TABLES SYSTEM (EQUIPMENT & MAINTENANCE)
+   ==================================================================== */
+.table-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.toolbar-search {
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-md);
+    padding: 0.4rem 0.85rem;
+    width: 320px;
+    gap: 0.5rem;
+}
+
+.toolbar-search i {
+    color: var(--text-muted);
+}
+
+.toolbar-search input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--input-text);
+    width: 100%;
+    font-size: 0.875rem;
+}
+
+.toolbar-filters {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.custom-select {
+    padding: 0.45rem 0.85rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    font-size: 0.85rem;
+    outline: none;
+    cursor: pointer;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    text-align: left;
+}
+
+.custom-table th {
+    background-color: rgba(47, 65, 86, 0.05);
+    color: var(--text-primary);
+    font-weight: 600;
+    padding: 0.85rem 1rem;
+    border-bottom: 2px solid var(--border-color);
+    white-space: nowrap;
+}
+
+[data-theme="dark"] .custom-table th {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.custom-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+    color: var(--text-primary);
+}
+
+.custom-table tr:hover td {
+    background-color: rgba(86, 124, 141, 0.04);
+}
+
+.table-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    margin-top: 1rem;
+}
+
+.pagination-info {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 0.35rem;
+}
+
+.page-btn {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.page-btn:hover {
+    background-color: var(--secondary-teal);
+    color: #FFFFFF;
+}
+
+.page-btn.active {
+    background-color: var(--primary-navy);
+    color: #FFFFFF;
+    border-color: var(--primary-navy);
+}
+
+/* ====================================================================
+   LAB SCHEDULE TIMETABLE MODULE
+   ==================================================================== */
+.schedule-filter-bar {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-item label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.timetable-container {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2.5rem;
+}
+
+.timetable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+.timetable th {
+    background-color: var(--primary-navy);
+    color: #FFFFFF;
+    padding: 1rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.timetable td {
+    border: 1px solid var(--border-color);
+    padding: 0.75rem;
+    vertical-align: top;
+    height: 140px;
+    width: 30%;
+}
+
+.time-slot-header {
+    background-color: rgba(86, 124, 141, 0.1);
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    width: 150px;
+    vertical-align: middle;
+}
+
+.schedule-card-item {
+    background: linear-gradient(135deg, rgba(47, 65, 86, 0.04) 0%, rgba(86, 124, 141, 0.08) 100%);
+    border-left: 4px solid var(--secondary-teal);
+    border-radius: var(--radius-md);
+    padding: 0.75rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition);
+}
+
+.schedule-card-item:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-sm);
+}
+
+.schedule-subject {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--primary-navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+[data-theme="dark"] .schedule-subject {
+    color: var(--light-sky-blue);
+}
+
+.schedule-meta-badge {
+    font-size: 0.7rem;
+    background-color: var(--secondary-teal);
+    color: #FFFFFF;
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+}
+
+.schedule-details {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.schedule-details i {
+    width: 14px;
+    color: var(--secondary-teal);
+}
+
+.theory-gap-cell {
+    background-color: rgba(0, 0, 0, 0.02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-style: italic;
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--border-color);
+}
+
+@media (max-width: 992px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+}
