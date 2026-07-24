@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIML AcademicHub - Department Management Portal | Faculty Dashboard</title>
+  
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/modules.css" />
+  <link rel="stylesheet" href="css/dark-mode.css" />
+
+  <!-- Chart.js & SheetJS Export CDNs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+  <div id="app-layout">
+
+    <!-- ====================================================================
+         LEFT SIDEBAR (Fixed Royal Blue Theme)
+         ==================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">
+          <img src="image/image.png" alt="Zeal Education Society ZCOER Logo" class="sidebar-logo-img" />
+        </div>
+        <div class="sidebar-brand-text">
+          <span class="sidebar-brand-title">AIML Hub</span>
+          <span class="sidebar-brand-subtitle">Department Portal</span>
+        </div>
+      </div>
+
+      <div class="sidebar-menu">
+        <span class="sidebar-menu-category">Navigation</span>
+        
+        <a href="#" class="sidebar-item active" data-tab="dashboard">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="#" class="sidebar-item" data-tab="attendance">
+          <i class="fas fa-user-check"></i>
+          <span>Attendance Management</span>
+          <span class="badge-count">2 Pending</span>
+        </a>
+
+        <a href="#" class="sidebar-item" data-tab="subjects">
+          <i class="fas fa-book"></i>
+          <span>Subject Management</span>
+        </a>
+
+        <a href="#" class="sidebar-item" data-tab="marks">
+          <i class="fas fa-file-signature"></i>
+          <span>Marks Entry</span>
+          <span class="badge-count">1 Action</span>
+        </a>
+
+        <a href="#" class="sidebar-item" data-tab="course-files">
+          <i class="fas fa-folder-open"></i>
+          <span>Course Files</span>
+        </a>
+
+        <a href="#" class="sidebar-item" data-tab="notices">
+          <i class="fas fa-bullhorn"></i>
+          <span>Notices & News</span>
+        </a>
+
+        <span class="sidebar-menu-category" style="margin-top: 1rem;">System</span>
+
+        <a href="#" class="sidebar-item" data-tab="settings">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="#" class="sidebar-item logout-btn" onclick="showToast('Logout', 'Session ended securely', 'info')">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         MAIN CONTENT WRAPPER
+         ==================================================================== -->
+    <div class="main-wrapper">
+
+      <!-- TOP NAVBAR -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button class="mobile-toggle-btn" onclick="toggleMobileSidebar()">
+            <i class="fas fa-bars"></i>
+          </button>
+          
+          <div class="dept-header-title">
+            <img src="image/image.png" alt="Zeal Education Society ZCOER Logo" class="dept-logo-img" />
+            <div>
+              <span class="dept-title-text">Department of AIML</span>
+              <div class="semester-badge" style="margin-top: 2px;">
+                <i class="fas fa-calendar-alt"></i> AY 2026-27 | Sem VI
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="navbar-search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Global search students, subjects, files..." id="globalSearchInput" />
+        </div>
+
+        <div class="navbar-right">
+          <!-- Dark Mode Toggle -->
+          <button class="nav-icon-btn" onclick="toggleDarkMode()" title="Toggle Light/Dark Theme">
+            <i class="fas fa-moon" id="themeToggleIcon"></i>
+          </button>
+
+          <!-- Notification Bell -->
+          <div style="position: relative;">
+            <button class="nav-icon-btn" onclick="toggleDropdown('notificationMenu')" title="Notifications">
+              <i class="fas fa-bell"></i>
+              <span class="notify-badge"></span>
+            </button>
+
+            <!-- Notifications Dropdown -->
+            <div class="dropdown-menu" id="notificationMenu">
+              <div class="dropdown-header">
+                <strong>Notifications</strong>
+                <span class="badge badge-primary" style="float: right;">3 New</span>
+              </div>
+              <div class="dropdown-item">
+                <i class="fas fa-exclamation-circle text-warning"></i>
+                <div>
+                  <strong>Marks Deadline Approaching</strong>
+                  <p style="font-size: 0.75rem;">UT1 marks submission closes July 28.</p>
+                </div>
+              </div>
+              <div class="dropdown-item">
+                <i class="fas fa-file-upload text-success"></i>
+                <div>
+                  <strong>New Syllabus Uploaded</strong>
+                  <p style="font-size: 0.75rem;">Generative AI & LLMs curriculum updated.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Faculty Profile Pill -->
+          <div class="faculty-profile-pill" onclick="toggleDropdown('profileMenu')">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" alt="Faculty Avatar" class="faculty-avatar" />
+            <div class="faculty-info">
+              <span class="faculty-name">Dr. A. Sharma</span>
+              <span class="faculty-role">Associate Professor & HOD</span>
+            </div>
+            <i class="fas fa-chevron-down" style="font-size: 0.75rem; color: var(--text-muted); margin-left: 0.25rem;"></i>
+
+            <!-- Profile Dropdown -->
+            <div class="dropdown-menu" id="profileMenu">
+              <div class="dropdown-header">
+                <strong>Dr. A. Sharma</strong>
+                <p style="font-size: 0.75rem;">a.sharma@academichub.edu</p>
+              </div>
+              <div class="dropdown-item" onclick="switchTab('settings')">
+                <i class="fas fa-user-cog"></i> Profile Settings
+              </div>
+              <div class="dropdown-item" onclick="switchTab('subjects')">
+                <i class="fas fa-book"></i> Assigned Courses
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item" style="color: var(--error-color);" onclick="showToast('Logout', 'Logging out...', 'info')">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT BODY -->
+      <main class="content-body">
+
+        <!-- ====================================================================
+             MODULE 1: DASHBOARD OVERVIEW
+             ==================================================================== -->
+        <section id="module-dashboard" class="module-container">
+          <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2>Faculty Overview Dashboard</h2>
+              <p>Welcome back, <strong>Dr. A. Sharma</strong>! Here is your academic snapshot for today.</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+              <button class="btn btn-outline" onclick="switchTab('attendance')">
+                <i class="fas fa-user-check"></i> Mark Attendance
+              </button>
+              <button class="btn btn-primary" onclick="openUploadFileModal()">
+                <i class="fas fa-cloud-upload-alt"></i> Upload Notes
+              </button>
+            </div>
+          </div>
+
+          <!-- Summary Cards Grid -->
+          <div class="summary-cards-grid">
+            <div class="summary-card">
+              <div class="summary-icon-box summary-icon-blue">
+                <i class="fas fa-book"></i>
+              </div>
+              <div class="summary-details">
+                <span class="summary-title">Total Subjects</span>
+                <span class="summary-number">6</span>
+                <span class="summary-subtext positive"><i class="fas fa-arrow-up"></i> +2 this semester</span>
+              </div>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-icon-box summary-icon-blue">
+                <i class="fas fa-chalkboard-teacher"></i>
+              </div>
+              <div class="summary-details">
+                <span class="summary-title">Today's Classes</span>
+                <span class="summary-number">4</span>
+                <span class="summary-subtext positive"><i class="fas fa-clock"></i> Next: 01:30 PM (Lab 402)</span>
+              </div>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-icon-box summary-icon-orange">
+                <i class="fas fa-user-clock"></i>
+              </div>
+              <div class="summary-details">
+                <span class="summary-title">Pending Attendance</span>
+                <span class="summary-number">2</span>
+                <span class="summary-subtext warning"><i class="fas fa-exclamation-triangle"></i> Div A & Div B</span>
+              </div>
+            </div>
+
+            <div class="summary-card">
+              <div class="summary-icon-box summary-icon-red">
+                <i class="fas fa-file-upload"></i>
+              </div>
+              <div class="summary-details">
+                <span class="summary-title">Pending Marks Upload</span>
+                <span class="summary-number">1</span>
+                <span class="summary-subtext warning"><i class="fas fa-exclamation-circle"></i> UT1 Computer Vision</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dashboard Analytics Grid -->
+          <div class="dashboard-grid">
+            <div class="card chart-card">
+              <div class="chart-card-header">
+                <h3>Weekly Student Attendance Trend</h3>
+                <span class="badge badge-primary">Sem VI AIML</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="attendanceTrendChart"></canvas>
+              </div>
+            </div>
+
+            <div class="card chart-card">
+              <div class="chart-card-header">
+                <h3>Subject Grade Distribution</h3>
+                <span class="badge badge-success">Overall</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="marksDistributionChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Grid: Activity Feed & Upcoming Lectures -->
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="chart-card-header">
+                <h3>Recent Portal Activities</h3>
+                <a href="#" style="font-size: 0.8rem;" onclick="showToast('Activity Feed', 'Showing full audit log', 'info')">View Log</a>
+              </div>
+              <div class="activity-list" id="recent-activities-list">
+                <!-- Injected via js/app.js -->
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="chart-card-header">
+                <h3>Today's Schedule</h3>
+                <span class="badge badge-primary">July 24, 2026</span>
+              </div>
+              <div id="upcoming-lectures-list">
+                <!-- Injected via js/app.js -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             MODULE 2: ATTENDANCE MANAGEMENT MODULE
+             ==================================================================== -->
+        <section id="module-attendance" class="module-container" style="display: none;">
+          <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2>Attendance Management Module</h2>
+              <p>Record, manage and audit student attendance for your assigned subjects.</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button class="btn btn-outline btn-sm" onclick="markAllPresent()">
+                <i class="fas fa-check-double"></i> Mark All Present
+              </button>
+              <button class="btn btn-success btn-sm" onclick="saveAttendanceData()">
+                <i class="fas fa-save"></i> Save Attendance
+              </button>
+              <button class="btn btn-outline btn-sm" onclick="openAttendanceHistoryModal()">
+                <i class="fas fa-history"></i> Attendance History
+              </button>
+              <button class="btn btn-outline btn-sm" onclick="openMonthlyReportModal()">
+                <i class="fas fa-chart-pie"></i> Monthly Report
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="downloadAttendanceExcel()">
+                <i class="fas fa-file-excel"></i> Export Excel
+              </button>
+              <button class="btn btn-outline btn-sm" onclick="downloadAttendancePDF()">
+                <i class="fas fa-file-pdf"></i> Export PDF
+              </button>
+            </div>
+          </div>
+
+          <!-- Attendance Filter Bar -->
+          <div class="filter-bar">
+            <div class="form-group">
+              <label class="form-label">Academic Year</label>
+              <select class="form-select">
+                <option>2026-2027</option>
+                <option>2025-2026</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Semester</label>
+              <select class="form-select">
+                <option>Semester VI</option>
+                <option>Semester V</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <select class="form-select">
+                <option>AIML-601: Deep Learning</option>
+                <option>AIML-603: Computer Vision</option>
+                <option>AIML-605: Generative AI & LLMs</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Division</label>
+              <select class="form-select">
+                <option>Division A</option>
+                <option>Division B</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Batch</label>
+              <select class="form-select">
+                <option>All Batches</option>
+                <option>Batch B1</option>
+                <option>Batch B2</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Lecture Date</label>
+              <input type="date" class="form-control" value="2026-07-24" />
+            </div>
+          </div>
+
+          <!-- Attendance Summary Widgets -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+            <div style="background: var(--surface-card); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Total Enrolled</span>
+              <h3 id="att-stat-total" style="font-size: 1.5rem; color: var(--primary-blue);">20</h3>
+            </div>
+            <div style="background: var(--surface-card); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Present Today</span>
+              <h3 id="att-stat-present" style="font-size: 1.5rem; color: var(--success-color);">18</h3>
+            </div>
+            <div style="background: var(--surface-card); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Absent Today</span>
+              <h3 id="att-stat-absent" style="font-size: 1.5rem; color: var(--error-color);">2</h3>
+            </div>
+            <div style="background: var(--surface-card); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Class Attendance Rate</span>
+              <h3 id="att-stat-percent" style="font-size: 1.5rem; color: var(--primary-blue);">90.0%</h3>
+            </div>
+          </div>
+
+          <!-- Student Attendance Table -->
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Roll Number</th>
+                  <th>Student Name</th>
+                  <th style="text-align: center;">Attendance Status</th>
+                  <th>Remarks / Notes</th>
+                </tr>
+              </thead>
+              <tbody id="attendance-table-body">
+                <!-- Rendered dynamically by attendance.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             MODULE 3: SUBJECT MANAGEMENT MODULE
+             ==================================================================== -->
+        <section id="module-subjects" class="module-container" style="display: none;">
+          <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2>Subject Management Module</h2>
+              <p>Explore department courses, credit distributions, and faculty allocations.</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+              <button class="btn btn-primary" onclick="openAddSubjectModal()">
+                <i class="fas fa-plus"></i> Add Subject
+              </button>
+              <button class="btn btn-outline" onclick="showToast('Import CSV', 'Select CSV file to import subjects', 'info')">
+                <i class="fas fa-file-csv"></i> Import CSV
+              </button>
+              <button class="btn btn-outline" onclick="exportSubjectsExcel()">
+                <i class="fas fa-file-excel"></i> Export Excel
+              </button>
+            </div>
+          </div>
+
+          <!-- Subject Search & Filter Bar -->
+          <div class="filter-bar" style="grid-template-columns: 2fr 1fr 1fr 1fr;">
+            <div class="form-group">
+              <label class="form-label">Search Subject</label>
+              <input type="text" id="subject-search-input" class="form-control" placeholder="Search by subject code or title..." oninput="filterSubjects()" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Filter Semester</label>
+              <select id="subject-sem-filter" class="form-select" onchange="filterSubjects()">
+                <option value="all">All Semesters</option>
+                <option value="Sem VI">Semester VI</option>
+                <option value="Sem V">Semester V</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Academic Year</label>
+              <select class="form-select">
+                <option>2026-2027</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Faculty</label>
+              <select id="subject-faculty-filter" class="form-select" onchange="filterSubjects()">
+                <option value="all">All Faculty</option>
+                <option value="Dr. A. Sharma">Dr. A. Sharma</option>
+                <option value="Prof. S. Rane">Prof. S. Rane</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Subject Cards Grid -->
+          <div class="subject-cards-grid" id="subject-cards-grid">
+            <!-- Rendered by subjects.js -->
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             MODULE 4: MARKS ENTRY MODULE
+             ==================================================================== -->
+        <section id="module-marks" class="module-container" style="display: none;">
+          <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2>Marks Entry Module</h2>
+              <p>Enter, verify, grade and publish academic evaluation scores.</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button class="btn btn-outline btn-sm" onclick="saveMarksDraft()">
+                <i class="fas fa-save"></i> Save Draft
+              </button>
+              <button class="btn btn-success btn-sm" onclick="publishMarks()">
+                <i class="fas fa-paper-plane"></i> Publish Results
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="downloadMarksExcel()">
+                <i class="fas fa-file-excel"></i> Export Excel
+              </button>
+              <button class="btn btn-outline btn-sm" onclick="downloadMarksPDF()">
+                <i class="fas fa-file-pdf"></i> Export PDF
+              </button>
+            </div>
+          </div>
+
+          <!-- Marks Entry Filter Bar -->
+          <div class="filter-bar">
+            <div class="form-group">
+              <label class="form-label">Academic Year</label>
+              <select class="form-select">
+                <option>2026-2027</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Semester</label>
+              <select class="form-select">
+                <option>Semester VI</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <select class="form-select">
+                <option>AIML-601: Deep Learning</option>
+                <option>AIML-602: Natural Language Processing</option>
+                <option>AIML-603: Computer Vision</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Exam Type</label>
+              <select id="marks-exam-type" class="form-select" onchange="updateExamTypeMaxMarks()">
+                <option value="ut1">Unit Test 1 (Max 20)</option>
+                <option value="ut2">Unit Test 2 (Max 20)</option>
+                <option value="assignment">Assignment (Max 25)</option>
+                <option value="practical">Practical (Max 50)</option>
+                <option value="endSem">End Semester (Max 100)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Performance Summary Widgets -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+            <div style="background: var(--surface-card); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Class Average Score</span>
+              <h3 id="marks-stat-avg" style="font-size: 1.5rem; color: var(--primary-blue);">84.2%</h3>
+            </div>
+
+            <div style="background: var(--surface-card); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Pass Percentage</span>
+              <h3 id="marks-stat-pass-rate" style="font-size: 1.5rem; color: var(--success-color);">95.0%</h3>
+            </div>
+          </div>
+
+          <!-- Student Marks Table -->
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Roll Number</th>
+                  <th>Student Name</th>
+                  <th>Marks Obtained</th>
+                  <th>Max Marks</th>
+                  <th>Percentage (%)</th>
+                  <th>Grade</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="marks-table-body">
+                <!-- Rendered dynamically by marks.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             MODULE 5: COURSE FILES MODULE
+             ==================================================================== -->
+        <section id="module-course-files" class="module-container" style="display: none;">
+          <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2>Course Files Repository</h2>
+              <p>Upload, organize, and distribute course material, notes, and question banks.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openUploadFileModal()">
+              <i class="fas fa-cloud-upload-alt"></i> Upload New File
+            </button>
+          </div>
+
+          <!-- Drag and Drop Zone -->
+          <div class="file-dropzone" id="fileDropzone" onclick="openUploadFileModal()">
+            <i class="fas fa-cloud-upload-alt dropzone-icon"></i>
+            <h4>Drag & Drop Files Here or Click to Upload</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">Supported formats: PDF, PPT, DOCX, ZIP (Max size: 50MB)</p>
+          </div>
+
+          <!-- File Category Pills & Search -->
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+            <div class="file-category-tabs">
+              <button class="file-tab active" onclick="filterFileCategory('All', this)">All Files</button>
+              <button class="file-tab" onclick="filterFileCategory('Notes', this)">Notes</button>
+              <button class="file-tab" onclick="filterFileCategory('PPT', this)">PPT</button>
+              <button class="file-tab" onclick="filterFileCategory('Assignments', this)">Assignments</button>
+              <button class="file-tab" onclick="filterFileCategory('Lab Manual', this)">Lab Manuals</button>
+              <button class="file-tab" onclick="filterFileCategory('Question Bank', this)">Question Bank</button>
+              <button class="file-tab" onclick="filterFileCategory('Previous Papers', this)">Previous Papers</button>
+            </div>
+
+            <div style="width: 260px;">
+              <input type="text" id="file-search-input" class="form-control" placeholder="Search course files..." oninput="renderCourseFilesGrid()" />
+            </div>
+          </div>
+
+          <!-- Course Files Grid -->
+          <div class="file-grid" id="course-files-grid">
+            <!-- Rendered by course-files.js -->
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             MODULE 6: NOTICES & NEWS MODULE
+             ==================================================================== -->
+        <section id="module-notices" class="module-container" style="display: none;">
+          <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2>Department Noticeboard</h2>
+              <p>Publish official academic updates, examination circulars, and departmental news.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openAddNoticeModal()">
+              <i class="fas fa-bullhorn"></i> + Post Notice
+            </button>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+            <div style="width: 220px;">
+              <select id="notice-category-filter" class="form-select" onchange="renderNoticesFeed()">
+                <option value="all">All Categories</option>
+                <option value="Exam">Exam Circulars</option>
+                <option value="Academic">Academic Notices</option>
+                <option value="Workshop">Workshops & Events</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Notices Feed Container -->
+          <div id="notices-feed-container">
+            <!-- Rendered by notices.js -->
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             MODULE 7: SETTINGS & PROFILE MODULE
+             ==================================================================== -->
+        <section id="module-settings" class="module-container" style="display: none;">
+          <div style="margin-bottom: 1.5rem;">
+            <h2>Faculty Portal Settings</h2>
+            <p>Manage your account profile, department preferences, and security settings.</p>
+          </div>
+
+          <div class="card" style="max-width: 800px;">
+            <form onsubmit="saveFacultySettings(event)">
+              <h3 style="margin-bottom: 1.25rem;">Faculty Profile Information</h3>
+
+              <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-blue);" alt="Profile" />
+                <div>
+                  <button type="button" class="btn btn-outline btn-sm" onclick="showToast('Avatar', 'Select new profile image', 'info')">Change Photo</button>
+                  <p style="font-size: 0.75rem; margin-top: 0.35rem;">JPG or PNG max 2MB.</p>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+                <div class="form-group">
+                  <label class="form-label">Full Name</label>
+                  <input type="text" class="form-control" value="Dr. A. Sharma" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Designation</label>
+                  <input type="text" class="form-control" value="Associate Professor & HOD" required />
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+                <div class="form-group">
+                  <label class="form-label">Email Address</label>
+                  <input type="email" class="form-control" value="a.sharma@academichub.edu" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Department</label>
+                  <input type="text" class="form-control" value="Artificial Intelligence & Machine Learning" readonly />
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Save Profile Changes</button>
+            </form>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       FLOATING ACTION BUTTON (FAB)
+       ==================================================================== -->
+  <button class="fab-btn" onclick="openAddNoticeModal()" title="Quick Add Notice">
+    <i class="fas fa-plus"></i>
+  </button>
+
+  <!-- ====================================================================
+       TOAST CONTAINER
+       ==================================================================== -->
+  <div id="toast-container"></div>
+
+  <!-- ====================================================================
+       MODALS DIALOGS
+       ==================================================================== -->
+  
+  <!-- Add Subject Modal -->
+  <div class="modal-overlay" id="addSubjectModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Subject</h3>
+        <button class="modal-close-btn" onclick="closeModal('addSubjectModal')">&times;</button>
+      </div>
+      <form onsubmit="handleAddSubjectSubmit(event)">
+        <div class="modal-body">
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">Subject Code</label>
+            <input type="text" name="subjectCode" class="form-control" placeholder="e.g. AIML-607" required />
+          </div>
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">Subject Title</label>
+            <input type="text" name="subjectName" class="form-control" placeholder="e.g. Autonomous Robotics" required />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Semester</label>
+              <select name="subjectSem" class="form-select">
+                <option>Sem VI</option>
+                <option>Sem V</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Credits</label>
+              <input type="number" name="subjectCredits" class="form-control" value="4" min="1" max="6" required />
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">Assigned Faculty</label>
+            <input type="text" name="subjectFaculty" class="form-control" value="Dr. A. Sharma" required />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Lecture Hrs/Wk</label>
+              <input type="number" name="subjectLecHours" class="form-control" value="3" min="0" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Practical Hrs/Wk</label>
+              <input type="number" name="subjectPracHours" class="form-control" value="2" min="0" required />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('addSubjectModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Subject</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Subject Detail Modal -->
+  <div class="modal-overlay" id="subjectDetailModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Subject Details</h3>
+        <button class="modal-close-btn" onclick="closeModal('subjectDetailModal')">&times;</button>
+      </div>
+      <div class="modal-body" id="subjectDetailContent">
+        <!-- Injected via subjects.js -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="closeModal('subjectDetailModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Attendance History Modal -->
+  <div class="modal-overlay" id="attendanceHistoryModal">
+    <div class="modal-container" style="max-width: 700px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Attendance Log & History</h3>
+        <button class="modal-close-btn" onclick="closeModal('attendanceHistoryModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Subject</th>
+                <th>Division</th>
+                <th>Present %</th>
+                <th>Recorded By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2026-07-24</td>
+                <td>Deep Learning</td>
+                <td>Div A</td>
+                <td><span class="badge badge-success">90.0%</span></td>
+                <td>Dr. A. Sharma</td>
+              </tr>
+              <tr>
+                <td>2026-07-23</td>
+                <td>Computer Vision</td>
+                <td>Div B</td>
+                <td><span class="badge badge-success">88.5%</span></td>
+                <td>Dr. A. Sharma</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="closeModal('attendanceHistoryModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Monthly Report Modal -->
+  <div class="modal-overlay" id="monthlyReportModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Monthly Attendance Defaulters (< 75%)</h3>
+        <button class="modal-close-btn" onclick="closeModal('monthlyReportModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Roll No</th>
+                <th>Name</th>
+                <th>Attendance %</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="low-attendance-row">
+                <td>AIML2404</td>
+                <td>Bhavya Shah</td>
+                <td><span class="badge badge-danger">64.0%</span></td>
+                <td><button class="btn btn-outline btn-sm" onclick="showToast('Notice Sent', 'Parent warning email triggered', 'warning')">Send Notice</button></td>
+              </tr>
+              <tr class="low-attendance-row">
+                <td>AIML2410</td>
+                <td>Kabir Mehta</td>
+                <td><span class="badge badge-danger">58.0%</span></td>
+                <td><button class="btn btn-outline btn-sm" onclick="showToast('Notice Sent', 'Parent warning email triggered', 'warning')">Send Notice</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="closeModal('monthlyReportModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Publish Marks Modal -->
+  <div class="modal-overlay" id="publishMarksModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Confirm Publish Results</h3>
+        <button class="modal-close-btn" onclick="closeModal('publishMarksModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to publish these marks to the student academic portal? Students will be able to view their scores and grade report.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeModal('publishMarksModal')">Cancel</button>
+        <button type="button" class="btn btn-success" onclick="confirmPublishMarks()">Confirm & Publish</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload File Modal -->
+  <div class="modal-overlay" id="uploadFileModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Upload Course File</h3>
+        <button class="modal-close-btn" onclick="closeModal('uploadFileModal')">&times;</button>
+      </div>
+      <form onsubmit="handleUploadFileSubmit(event)">
+        <div class="modal-body">
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">Document Title / File Name</label>
+            <input type="text" id="uploadFileTitle" name="fileTitle" class="form-control" placeholder="e.g. Unit 4 GANs Lecture Notes.pdf" required />
+          </div>
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">Category</label>
+            <select name="fileCategory" class="form-select">
+              <option>Notes</option>
+              <option>PPT</option>
+              <option>Assignments</option>
+              <option>Lab Manual</option>
+              <option>Question Bank</option>
+              <option>Previous Papers</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">Target Subject</label>
+            <select name="fileSubject" class="form-select">
+              <option>Deep Learning & Neural Networks</option>
+              <option>Natural Language Processing</option>
+              <option>Computer Vision & Image AI</option>
+              <option>Generative AI & LLMs</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('uploadFileModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Upload File</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- File Preview Modal -->
+  <div class="modal-overlay" id="filePreviewModal">
+    <div class="modal-container" style="max-width: 650px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Document Preview</h3>
+        <button class="modal-close-btn" onclick="closeModal('filePreviewModal')">&times;</button>
+      </div>
+      <div class="modal-body" id="filePreviewContent">
+        <!-- Injected via course-files.js -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="closeModal('filePreviewModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post Notice Modal -->
+  <div class="modal-overlay" id="addNoticeModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Post Department Notice</h3>
+        <button class="modal-close-btn" onclick="closeModal('addNoticeModal')">&times;</button>
+      </div>
+      <form onsubmit="handleAddNoticeSubmit(event)">
+        <div class="modal-body">
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">Notice Title</label>
+            <input type="text" name="noticeTitle" class="form-control" placeholder="e.g. Schedule for Machine Learning Mini Project Viva" required />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select name="noticeCategory" class="form-select">
+                <option>Academic</option>
+                <option>Exam</option>
+                <option>Workshop</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Priority Flag</label>
+              <select name="noticePriority" class="form-select">
+                <option value="academic">Normal</option>
+                <option value="warning">Attention</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label class="form-label">Notice Body Content</label>
+            <textarea name="noticeContent" class="form-control" rows="4" placeholder="Write full details of announcement..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; cursor: pointer;">
+              <input type="checkbox" name="noticePinned" /> Pin to top of Noticeboard
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('addNoticeModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Post Notice</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/attendance.js"></script>
+  <script src="js/subjects.js"></script>
+  <script src="js/marks.js"></script>
+  <script src="js/course-files.js"></script>
+  <script src="js/notices.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

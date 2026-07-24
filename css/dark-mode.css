@@ -1,0 +1,104 @@
+/* ==========================================================================
+   AIML AcademicHub Department Management Portal - Dark Mode Stylesheet
+   ========================================================================== */
+
+body.dark-mode {
+  --body-bg: #0f172a;
+  --surface-card: #1e293b;
+  --surface-hover: #334155;
+  --sidebar-bg: #091e42;
+  --sidebar-hover: #1e3a8a;
+  --sidebar-active: #2563eb;
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-light: #64748b;
+
+  --border-color: #334155;
+  --border-light: #1e293b;
+  --accent-blue: #1e3a8a;
+  --accent-border: #2563eb;
+  
+  --glass-bg: rgba(30, 41, 59, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .top-navbar {
+  background: var(--glass-bg);
+  border-bottom-color: var(--border-color);
+}
+
+body.dark-mode .navbar-search input {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+body.dark-mode .table th {
+  background: #0f172a;
+  color: #94a3b8;
+  border-bottom-color: #334155;
+}
+
+body.dark-mode .table td {
+  border-bottom-color: #334155;
+  color: #f8fafc;
+}
+
+body.dark-mode .table tbody tr:hover {
+  background: rgba(37, 99, 235, 0.15);
+}
+
+body.dark-mode .card,
+body.dark-mode .summary-card,
+body.dark-mode .filter-bar,
+body.dark-mode .subject-card,
+body.dark-mode .file-card,
+body.dark-mode .notice-card,
+body.dark-mode .modal-container {
+  background: var(--surface-card);
+  border-color: var(--border-color);
+}
+
+body.dark-mode .subject-meta-list {
+  background: #0f172a;
+}
+
+body.dark-mode .file-dropzone {
+  background: #0f172a;
+  border-color: #2563eb;
+}
+
+body.dark-mode .form-control,
+body.dark-mode .form-select,
+body.dark-mode .marks-input-cell {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+body.dark-mode .dropdown-menu {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-mode .dropdown-item:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+body.dark-mode .notice-card.pinned {
+  background: #1e3a8a;
+}
+
+body.dark-mode .upcoming-lecture-card {
+  background: #1e3a8a;
+  border-color: #2563eb;
+}
+
+body.dark-mode .modal-footer {
+  background: #0f172a;
+}
