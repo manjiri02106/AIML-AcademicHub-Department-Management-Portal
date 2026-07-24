@@ -1,0 +1,8 @@
+import { GraduationCap, LockKeyhole, Mail } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
+
+export default function Login() { const [form, setForm] = useState({ email: 'faculty@aiml.edu', password: 'password' }); const [error, setError] = useState(''); const { login } = useAuth(); const navigate = useNavigate();
+  async function submit(e) { e.preventDefault(); setError(''); try { await login(form); navigate('/'); } catch (err) { setError(err.response?.data?.message || 'Unable to sign in'); } }
+  return <main className="login-page"><section className="login-panel"><div className="brand login-brand"><div className="brand-mark"><GraduationCap size={22} /></div><span>AIML Hub</span></div><div className="login-copy"><p className="eyebrow">ACADEMIC DEPARTMENT MANAGEMENT</p><h1>Welcome back, faculty.</h1><p>One calm workspace for courses, mentoring, and the work between them.</p></div><form onSubmit={submit} className="form-stack">{error && <div className="error-box">{error}</div>}<label>Email <span className="input-wrap"><Mail size={17} /><input type="email" required value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} /></span></label><label>Password <span className="input-wrap"><LockKeyhole size={17} /><input type="password" required value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} /></span></label><button className="primary-button" type="submit">Enter faculty portal</button></form></section><section className="login-art"><div className="art-note"><span>03</span><p>Modules designed around the rhythm of an academic day.</p></div></section></main>; }
