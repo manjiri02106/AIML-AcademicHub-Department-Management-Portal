@@ -12,7 +12,7 @@
     <style>
         body { font-family: 'Inter', 'Segoe UI', sans-serif; background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); }
         .card { border-radius: 24px; box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08); }
-        .btn-primary { background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%); border: none; }
+        .btn-primary { background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%); border: none; }
     </style>
 </head>
 <body>

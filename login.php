@@ -54,7 +54,7 @@ include __DIR__ . '/includes/header_public.php';
 <div class="container-fluid py-4">
     <div class="row min-vh-100 align-items-center">
         <div class="col-lg-6 d-none d-lg-flex p-5">
-            <div class="rounded-4 p-5 w-100 h-100 d-flex flex-column justify-content-between" style="background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%); color: white;">
+            <div class="rounded-4 p-5 w-100 h-100 d-flex flex-column justify-content-between" style="background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%); color: white;">
                 <div>
                     <h1 class="display-6 fw-bold">AIML AcademicHub</h1>
                     <p class="lead opacity-75">Modern department operations, students, faculty, and research collaboration in one elegant console.</p>

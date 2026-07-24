@@ -129,4 +129,4 @@ INSERT IGNORE INTO users (id, full_name, email, mobile, password_hash, departmen
 VALUES (1, 'System Administrator', 'admin@aiml.edu', '9876543210', '$2y$10$KCHh6GdE4r5KzXNvZrSxae8S6bjZi77Xnfd2yjhVCtw7DxLN5Wava', 'AI & ML', 'Administrator', 1, 'active', '2024-01-01');
 
 INSERT IGNORE INTO department_settings (id, department_name, department_code, institute_name, address, email, phone, academic_year, semester, divisions, sections, subjects, course_types, theme_color, footer_text, smtp_email, sms_enabled, push_enabled)
-VALUES (1, 'Artificial Intelligence & Machine Learning', 'AIML', 'AIML AcademicHub Institute', 'New Delhi, India', 'dept@aiml.edu', '011-45001234', '2025-2026', 'Semester 1', 'A, B', 'A, B', 'Python, Data Structures, ML Basics', 'UG, PG', '#2563eb', '© 2026 AIML AcademicHub', 'smtp@aiml.edu', 1, 1);
+VALUES (1, 'Artificial Intelligence & Machine Learning', 'AIML', 'AIML AcademicHub Institute', 'New Delhi, India', 'dept@aiml.edu', '011-45001234', '2025-2026', 'Semester 1', 'A, B', 'A, B', 'Python, Data Structures, ML Basics', 'UG, PG', '#0ea5e9', '© 2026 AIML AcademicHub', 'smtp@aiml.edu', 1, 1);
